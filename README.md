@@ -1,8 +1,11 @@
 # Personal Website
 
 # Libraries and framework used:
+
 Django 2.2
+..
 Pillow
+..
 Crispy form
 
 # Steps to download project:
