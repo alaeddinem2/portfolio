@@ -5,7 +5,7 @@
 
 
 {% block body %}
-<section id="hero" style="background: url("{% static 'site_static/assets/img/hero-bg.jpg' %}") top center;" class="d-flex flex-column justify-content-center align-items-center">
+<section id="hero" style="background: url( " { % static 'site_static/assets/img/hero-bg.jpg' % } " ) top center;" class="d-flex flex-column justify-content-center align-items-center">
     <div class="hero-container" data-aos="fade-in">
       <h1>Alaeddine Telli</h1>
       <p>I'm <span class="typed" data-typed-items="Web Developer,Electronic Engineer, Freelancer"></span></p>
@@ -260,8 +260,8 @@
 
               <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
                     {% for project in projects   %}
-                    {% if project.category == 1 %}
-                      <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+                    {% if project.category.name == "Embedded Systems" %}
+                      <div class="col-lg-4 col-md-6 portfolio-item filter-embedded">
                           <div class="portfolio-wrap">
                             <img src="{% static 'site_static/assets/img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
                             <div class="portfolio-links">
@@ -271,7 +271,7 @@
                           </div>
                         </div>
                     {% else %}
-                      <div class="col-lg-4 col-md-6 portfolio-item filter-embedded">
+                      <div class="col-lg-4 col-md-6 portfolio-item filter-web">
                           <div class="portfolio-wrap">
                             <img src="{{ project.image.url}}" class="img-fluid" alt="">
                             <div class="portfolio-links">
@@ -425,7 +425,7 @@
 
         <div class="section-title">
           <h2>Contact</h2>
-          <p>For more information or demand service don't late.. contact me</p>
+          <p>For more information or demand service don't late..  <a href="{% url 'portfolio:contact' %}">Contact me </a></p>
         </div>
 
         <div class="row" data-aos="fade-in">

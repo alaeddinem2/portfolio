@@ -1,7 +1,9 @@
 from portfolio.models import Project
 from django.shortcuts import render
 from django.http.response import JsonResponse
-from . models import Project, ProjectImage
+from . models import Contact, Project, ProjectImage
+from django.contrib import messages
+from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
 def home(request):
     projects=Project.objects.all()
@@ -19,6 +21,30 @@ def project_detail(request,slug):
         'images':images
     }
     return render(request,'portfolio/project_detail.html',context)
+
+def contact_page(request):
+    return render(request,'portfolio/contact.html')
+
+def contact_me(request):
+    if request.method != "POST":
+        return HttpResponse('Methode Not Allowed !')
+    else:
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        subject = request.POST.get("subject")
+        message = request.POST.get("message")
+        try:
+            contact=Contact(name=name,email=email,subject=subject,message=message)
+            contact.save()
+            messages.success(request,"Successfully sent message")
+            return HttpResponseRedirect("/contact")
+        except:
+            messages.error(request, "Failed to send message")
+            return HttpResponseRedirect("/contact")
+
+        
+        
+    
     
 
 
