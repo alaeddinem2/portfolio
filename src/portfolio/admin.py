@@ -5,7 +5,9 @@ from . models import Project,Category,Client,ProjectImage,Contact
 
 admin.site.register(Client)
 admin.site.register(Category)
-admin.site.register(Contact)
+
+
+
 
 
 class ProjectImageAdmin(admin.StackedInline):
@@ -20,3 +22,13 @@ class ProjectAdmin(admin.ModelAdmin):
 @admin.register(ProjectImage)
 class ProjectImageAdmin(admin.ModelAdmin):
     pass
+
+
+class ContactAdmin(admin.ModelAdmin):
+    
+    list_display = ('name','email','subject','message')
+    list_filter = ('name','email','subject','message')
+    #list_editable = ('name','email','subject','message')
+    
+
+admin.site.register(Contact,ContactAdmin)

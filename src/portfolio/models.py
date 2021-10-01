@@ -28,7 +28,7 @@ class Project(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug=slugify(self.name+'-'+str(self.client))
+            self.slug=slugify(self.name +'-'+ str(self.client))
         super(Project,self).save(*args, **kwargs)
 
     class Meta:

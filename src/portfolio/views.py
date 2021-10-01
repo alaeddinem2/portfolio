@@ -21,18 +21,23 @@ def project_detail(request,slug):
         'images':images
     }
     return render(request,'portfolio/project_detail.html',context)
+    
 
 def contact_page(request):
-    return render(request,'portfolio/contact.html')
 
-def contact_me(request):
-    if request.method != "POST":
-        return HttpResponse('Methode Not Allowed !')
-    else:
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        subject = request.POST.get("subject")
-        message = request.POST.get("message")
+    return render(request,'portfolio/contact.html')
+      
+    
+def contact_me(request) :
+
+     if request.method != "POST":
+            return HttpResponse('Methode Not Allowed !')
+         
+     else:
+        name = request.POST["name"]
+        email = request.POST["email"]
+        subject = request.POST["subject"]
+        message = request.POST["message"]
         try:
             contact=Contact(name=name,email=email,subject=subject,message=message)
             contact.save()
@@ -41,6 +46,10 @@ def contact_me(request):
         except:
             messages.error(request, "Failed to send message")
             return HttpResponseRedirect("/contact")
+
+    
+
+
 
         
         
