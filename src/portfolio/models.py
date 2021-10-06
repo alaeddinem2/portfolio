@@ -7,7 +7,12 @@ from django.urls import reverse
 
 from django_resized import ResizedImageField
 # Create your models here.
+class Visit(models.Model):
+    visitor_ip=models.CharField(max_length=20)
+    time=models.DateTimeField(auto_now_add=True)
 
+    def __str__(self) :
+        return str(self.id)
 class Project(models.Model):
     name=models.CharField(max_length=100,null=True,verbose_name=_("Name"),blank=True)
     category=models.ForeignKey('Category',on_delete=models.CASCADE,blank=True,null=True,verbose_name=_("Category"))

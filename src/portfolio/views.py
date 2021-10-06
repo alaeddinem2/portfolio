@@ -1,11 +1,26 @@
 from portfolio.models import Project
 from django.shortcuts import render
 from django.http.response import JsonResponse
-from . models import Contact, Project, ProjectImage
+from . models import Contact, Project, ProjectImage, Visit
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
+
+def get_ip(request):
+    try:
+        x_forward=request.META.get("HTTP_X_FORWARDED_FOR")
+        if x_forward:
+            ip=x_forward.split(",")[0]
+        else:
+            ip=request.META.get("REMOTE_ADDR")
+    except:
+        ip="none"
+    return ip
+
 def home(request):
+    ip=get_ip(request)
+    visit=Visit(visitor_ip=ip)
+    visit.save()
     projects=Project.objects.all()
     context={
         'projects':projects
