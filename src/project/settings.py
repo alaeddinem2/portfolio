@@ -25,7 +25,7 @@ SECRET_KEY = 'b9+uu4_r^7o24)m=r(#e#g!p4ns9w)^^ant2lqhu(4t%b+z8-b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 APPEND_SLASH=False
 
 # Application definition
@@ -37,9 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     
-    'portfolio'
+    'portfolio',
+    'invitations',
 ]
+SITE_ID = 1
+ACCOUNT_ADAPTER = 'invitations.models.InvitationsAdapter'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -127,3 +131,5 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'
 MEDIA_URL="/media/"
 MEDIA_ROOT=os.path.join(BASE_DIR,"media")
+
+

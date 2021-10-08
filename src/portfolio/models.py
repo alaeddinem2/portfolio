@@ -4,12 +4,14 @@ from django_countries.fields import CountryField
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 from django.urls import reverse
+from datetime import datetime
+from django.utils import timezone
 
-from django_resized import ResizedImageField
 # Create your models here.
 class Visit(models.Model):
+    visitor_name=models.CharField(max_length=20)
     visitor_ip=models.CharField(max_length=20)
-    time=models.DateTimeField(auto_now_add=True)
+    time=models.CharField(default=timezone.now(), max_length=19)
 
     def __str__(self) :
         return str(self.id)

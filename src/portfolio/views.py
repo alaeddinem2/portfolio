@@ -5,22 +5,38 @@ from . models import Contact, Project, ProjectImage, Visit
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
+from invitations.utils import get_invitation_model
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
+@login_required
 def get_ip(request):
+    
     try:
-        x_forward=request.META.get("HTTP_X_FORWARDED_FOR")
-        if x_forward:
+         x_forward=request.META.get("HTTP_X_FORWARDED_FOR")
+         if x_forward:
             ip=x_forward.split(",")[0]
-        else:
+         else:
             ip=request.META.get("REMOTE_ADDR")
     except:
-        ip="none"
+            ip="none"
+    
     return ip
 
 def home(request):
-    ip=get_ip(request)
-    visit=Visit(visitor_ip=ip)
-    visit.save()
+    if request.user.is_authenticated:
+        ip=get_ip(request)
+            
+        username=None
+        username = request.user.username
+        
+        print(username)
+        visit=Visit(visitor_ip=ip,visitor_name=username)
+        visit.save()
+    else:
+        pass
+
     projects=Project.objects.all()
     context={
         'projects':projects
