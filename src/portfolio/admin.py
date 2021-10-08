@@ -5,7 +5,14 @@ from . models import Project,Category,Client,ProjectImage,Contact, Visit
 
 admin.site.register(Client)
 admin.site.register(Category)
-admin.site.register(Visit)
+
+
+
+class VisitorAdmin(admin.ModelAdmin):
+    
+    list_display = ('id','visitor_name','visitor_ip','time')
+    list_filter = ('id','visitor_name','visitor_ip','time')
+admin.site.register(Visit,VisitorAdmin)
 
 
 
