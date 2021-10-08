@@ -11,7 +11,7 @@ from django.utils import timezone
 class Visit(models.Model):
     visitor_name=models.CharField(max_length=20)
     visitor_ip=models.CharField(max_length=20)
-    time=models.CharField(default=timezone.now(), max_length=19)
+    time=models.CharField(default=timezone.now().strftime("%Y-%m-%d "  " %H:%M:%S"), max_length=19)
 
     def __str__(self) :
         return str(self.id)
