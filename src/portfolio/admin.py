@@ -8,10 +8,11 @@ admin.site.register(Category)
 
 
 
+
 class VisitorAdmin(admin.ModelAdmin):
     
     list_display = ('id','visitor_name','visitor_ip','time')
-    list_filter = ('id','visitor_name','visitor_ip','time')
+    
 admin.site.register(Visit,VisitorAdmin)
 
 

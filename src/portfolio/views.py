@@ -9,34 +9,30 @@ from invitations.utils import get_invitation_model
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from datetime import datetime
+from django.utils import timezone
+from threading import Timer
+from ipware import get_client_ip
 
-@login_required
-def get_ip(request):
+
+# get ip user and save it in database
+def save_ip(request):
+    if request.user.is_authenticated:
+        ip=get_client_ip(request)
+        ip=ip[0]
+        print(ip)
+        time=timezone.now().strftime("%Y-%m-%d "   " %H:%M:%S")
+        visit=Visit(visitor_ip=ip,visitor_name=request.user,time=time)
+        visit.save()
+        
     
-    try:
-         x_forward=request.META.get("HTTP_X_FORWARDED_FOR")
-         if x_forward:
-            ip=x_forward.split(",")[0]
-         else:
-            ip=request.META.get("REMOTE_ADDR")
-    except:
-            ip="none"
-    
-    return ip
+
 
 def home(request):
-    if request.user.is_authenticated:
-        ip=get_ip(request)
-            
-        username=None
-        username = request.user.username
-        
-        print(username)
-        visit=Visit(visitor_ip=ip,visitor_name=username)
-        visit.save()
-    else:
-        pass
-
+    
+    #call the function when get home page
+    save_ip(request)   
+     
     projects=Project.objects.all()
     context={
         'projects':projects
@@ -52,10 +48,12 @@ def project_detail(request,slug):
         'images':images
     }
     return render(request,'portfolio/project_detail.html',context)
-    
+
+
+
 
 def contact_page(request):
-
+    
     return render(request,'portfolio/contact.html')
       
     

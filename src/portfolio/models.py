@@ -4,14 +4,13 @@ from django_countries.fields import CountryField
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 from django.urls import reverse
-from datetime import datetime
-from django.utils import timezone
+
 
 # Create your models here.
 class Visit(models.Model):
     visitor_name=models.CharField(max_length=20)
     visitor_ip=models.CharField(max_length=20)
-    time=models.CharField(default=timezone.now().strftime("%Y-%m-%d "  " %H:%M:%S"), max_length=19)
+    time=models.CharField(max_length=19)
 
     def __str__(self) :
         return str(self.id)
