@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     
     'portfolio',
-    'invitations',
+    
 ]
 SITE_ID = 1
 ACCOUNT_ADAPTER = 'invitations.models.InvitationsAdapter'

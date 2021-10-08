@@ -5,7 +5,7 @@ from . models import Contact, Project, ProjectImage, Visit
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
-from invitations.utils import get_invitation_model
+
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
