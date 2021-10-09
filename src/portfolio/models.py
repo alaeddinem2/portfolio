@@ -4,8 +4,8 @@ from django_countries.fields import CountryField
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 from django.urls import reverse
-
-
+from django.db.models.signals import post_save
+from django.contrib.auth.models import User
 # Create your models here.
 class Visit(models.Model):
     visitor_name=models.CharField(max_length=20)
@@ -15,16 +15,17 @@ class Visit(models.Model):
     def __str__(self) :
         return str(self.id)
 class Project(models.Model):
-    name=models.CharField(max_length=100,null=True,verbose_name=_("Name"),blank=True)
-    category=models.ForeignKey('Category',on_delete=models.CASCADE,blank=True,null=True,verbose_name=_("Category"))
+    author=models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True,verbose_name=_("author"))
+    name=models.CharField(max_length=100,null=True,verbose_name=_("Name"),blank=True,default="Embedded Systems")
+    category=models.ForeignKey('Category',on_delete=models.CASCADE,blank=True,null=True,verbose_name=_("Category"),default="")
     slug=models.SlugField(verbose_name=_("Slug"),blank=True)
-    description=models.TextField(blank=True)
+    description=models.TextField(blank=True,default="this ")
     client=models.ForeignKey('Client',on_delete=models.CASCADE,blank=True,null=True,verbose_name=_("Client"))
-    start_date=models.DateField(verbose_name=_("Start Date "),blank=True)
-    end_date=models.DateField(verbose_name=_("End Date "),blank=True)
-    live_demo_url=models.CharField(max_length=100,verbose_name=_("live demo  "),blank=True)
-    github_url=models.CharField(max_length=100,verbose_name=_("github  "),blank=True)
-    image = models.ImageField(upload_to="projects/")
+    start_date=models.DateField(verbose_name=_("Start Date "),blank=True,null=True)
+    end_date=models.DateField(verbose_name=_("End Date "),blank=True,null=True)
+    live_demo_url=models.CharField(max_length=100,verbose_name=_("live demo  "),blank=True,null=True)
+    github_url=models.CharField(max_length=100,verbose_name=_("github  "),blank=True,null=True)
+    image = models.ImageField(upload_to="projects/",blank=True,null=True)
 
     
     
@@ -94,5 +95,9 @@ class Contact(models.Model):
     def __str__(self) :
         return "message from: " + self.name
  
+def create_project(sender,**kwargs):
+    if kwargs['created']:
+        project= Project.objects.create(author=kwargs['instance'])
 
+post_save.connect(create_project,sender=User)
     

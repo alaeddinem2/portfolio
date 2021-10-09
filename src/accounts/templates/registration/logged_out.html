@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+ {% block body %}
+  <!--Main layout-->
+  <main class="mt-5 pt-4">
+    <div class="container dark-grey-text mt-5">
+         <p>Logged out!</p>
+        <a href="{% url 'login'%}">Click here to login again.</a>
+
+    </div>
+  </main>
+  <!--Main layout-->
+  {% endblock body %}
