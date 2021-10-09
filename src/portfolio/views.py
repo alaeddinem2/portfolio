@@ -17,7 +17,7 @@ from ipware import get_client_ip
 
 # get ip user and save it in database
 def save_ip(request):
-    if request.user.is_authenticated:
+   # if request.user.is_authenticated:
         ip=get_client_ip(request)
         ip=ip[0]
         print(ip)
