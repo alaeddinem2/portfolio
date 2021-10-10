@@ -6,6 +6,8 @@ from django.utils.text import slugify
 from django.urls import reverse
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from django_limits.limiter import Limiter
+
 # Create your models here.
 class Visit(models.Model):
     visitor_name=models.CharField(max_length=20)
@@ -25,7 +27,7 @@ class Project(models.Model):
     end_date=models.DateField(verbose_name=_("End Date "),blank=True,null=True)
     live_demo_url=models.CharField(max_length=100,verbose_name=_("live demo  "),blank=True,null=True)
     github_url=models.CharField(max_length=100,verbose_name=_("github  "),blank=True,null=True)
-    image = models.ImageField(upload_to="projects/",blank=True,null=True)
+    image = models.ImageField(upload_to="projects/",blank=True,null=True,default="default.jpg")
 
     
     
@@ -45,6 +47,13 @@ class Project(models.Model):
   
     def get_absolute_url(self):
         return reverse("portfolio:project_detail", kwargs={"slug": self.slug})
+
+class MaxNumPost(models.Model):
+    user_num= models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True,)
+    max_num=models.IntegerField(default="2",blank=True,null=True)
+
+    def __str__(self) :
+        return str(self.user_num)
 
 class Category(models.Model):
     name=models.CharField(max_length=50,verbose_name=_("Name"))
@@ -95,9 +104,10 @@ class Contact(models.Model):
     def __str__(self) :
         return "message from: " + self.name
  
-def create_project(sender,**kwargs):
-    if kwargs['created']:
-        project= Project.objects.create(author=kwargs['instance'])
+# def create_project(sender,**kwargs):
+#     if kwargs['created']:
+#         project= Project.objects.create(author=kwargs['instance'])
 
-post_save.connect(create_project,sender=User)
-    
+# post_save.connect(create_project,sender=User)
+
+

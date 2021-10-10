@@ -31,6 +31,7 @@ APPEND_SLASH=False
 # Application definition
 
 INSTALLED_APPS = [
+    
     'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,10 +44,14 @@ INSTALLED_APPS = [
     'portfolio',
     
 ]
+
+
+
 SITE_ID = 1
 ACCOUNT_ADAPTER = 'invitations.models.InvitationsAdapter'
 
 MIDDLEWARE = [
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

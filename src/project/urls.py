@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 from portfolio import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin', admin.site.urls),
     path('',include('portfolio.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     

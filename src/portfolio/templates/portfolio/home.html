@@ -266,6 +266,7 @@
                             <img src="{% static 'site_static/assets/img/portfolio/portfolio-1.jpg' %}" class="img-fluid" style="width:100%; height:240px;" alt="">
                             <div class="portfolio-links">
                               <a href="{% static 'site_static/assets/img/portfolio/portfolio-1.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="{{project.name}}"><i class="bx bx-plus"></i></a>
+                                        
                               <a href="{{project.get_absolute_url}}" title="More Details"><p>{{project.name}}</p></a>
                               <a href="{{project.get_absolute_url}}" title="More Details"><i class="bx bx-link"></i></a>
                             </div>
@@ -274,9 +275,13 @@
                     {% else %}
                       <div class="col-lg-4 col-md-6 portfolio-item filter-web" >
                           <div class="portfolio-wrap">
+                                {% if project.image %}
                             <img src="{{ project.image.url}}" class="img-fluid" style="width:100%; height:240px;" alt="">
+                                {% endif %}
                             <div class="portfolio-links">
+                                      {% if project.image %}
                               <a href="{{ project.image.url}}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="{{project.name}}"><i class="bx bx-plus"></i></a>
+                                      {% endif %}
                               <a href="{{project.get_absolute_url}}" title="More Details"><p>{{project.name}}</p></a>
                               <a href="{{project.get_absolute_url}}" title="More Details"><i class="bx bx-link"></i></a>
                               

@@ -1,7 +1,8 @@
+from django.contrib.auth.models import User
 from portfolio.models import Project
 from django.shortcuts import render
 from django.http.response import JsonResponse
-from . models import Contact, Project, ProjectImage, Visit
+from . models import Contact, Project, ProjectImage, Visit,MaxNumPost
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
@@ -13,6 +14,33 @@ from datetime import datetime
 from django.utils import timezone
 from threading import Timer
 from ipware import get_client_ip
+from django.views.generic import CreateView,UpdateView,DeleteView
+from .forms import NewProject
+
+
+
+
+@login_required(login_url='login')
+def create_project(request):
+    num_post = Project.objects.filter(author=request.user).count()
+    max_num=MaxNumPost.objects.filter(user_num=request.user).count()
+    print(max_num)
+    if num_post <= max_num :
+        if request.method == 'POST':
+                project_form=NewProject(data=request.POST)
+                if project_form.is_valid():
+                    project_form.instance.author=request.user
+                    new_project=project_form.save()
+        else:
+                project_form=NewProject()
+    else:
+        return HttpResponse("not allowed to post")
+
+    context={
+        'form':project_form
+    }
+    print(max_num)
+    return render(request,'portfolio/project.html',context)
 
 
 # get ip user and save it in database

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . models import Project,Category,Client,ProjectImage,Contact, Visit
+from . models import MaxNumPost, Project,Category,Client,ProjectImage,Contact, Visit
 # Register your models here.
 
 
@@ -9,11 +9,13 @@ admin.site.register(Category)
 
 
 
+
 class VisitorAdmin(admin.ModelAdmin):
     
     list_display = ('id','visitor_name','visitor_ip','time')
     
-admin.site.register(Visit,VisitorAdmin)
+
+
 
 
 
@@ -26,7 +28,7 @@ class ProjectImageAdmin(admin.StackedInline):
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     inlines = [ProjectImageAdmin]
-
+    
     class Meta:
        model = Project
 @admin.register(ProjectImage)
@@ -42,3 +44,12 @@ class ContactAdmin(admin.ModelAdmin):
     
 
 admin.site.register(Contact,ContactAdmin)
+
+class MaxNumPostAdmin(admin.ModelAdmin):
+    
+    list_display = ('user_num','max_num')
+    list_filter = ('user_num','max_num')
+    list_editable = ['max_num']
+    
+
+admin.site.register(MaxNumPost,MaxNumPostAdmin)
