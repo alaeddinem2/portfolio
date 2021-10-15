@@ -40,16 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    
+    'django_registration',
     'portfolio',
+    
     
 ]
 
 
 
 SITE_ID = 1
-ACCOUNT_ADAPTER = 'invitations.models.InvitationsAdapter'
-
+ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
 MIDDLEWARE = [
     
     'django.middleware.security.SecurityMiddleware',
@@ -125,6 +125,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+#ORGS_SLUGFIELD = 'autoslug.fields.AutoSlugField'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/

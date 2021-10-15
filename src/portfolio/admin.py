@@ -15,7 +15,7 @@ class VisitorAdmin(admin.ModelAdmin):
     list_display = ('id','visitor_name','visitor_ip','time')
     
 
-
+admin.site.register(Visit,VisitorAdmin)
 
 
 
